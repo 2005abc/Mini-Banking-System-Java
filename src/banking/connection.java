@@ -5,16 +5,16 @@ import java.sql.DriverManager;
 
 // Global connection Class
 public class connection {
-    static Connection con; // Global Connection Object
+    static Connection con; 
     public static Connection getConnection()
     {
         try {
             String mysqlJDBCDriver
-                    = "com.mysql.cj.jdbc.Driver"; //jdbc driver
+                    = "com.mysql.cj.jdbc.Driver"; 
             String url
-                    = "jdbc:mysql://localhost:3306/BANK"; //mysql url
-            String user = "root";        //mysql username
-            String pass = "vinay_kumar@&1976";  //mysql passcode
+                    = "jdbc:mysql://localhost:3306/BANK"; 
+            String user = "root";       
+            String pass = "vinay_kumar@&1976";  
             Class.forName(mysqlJDBCDriver);
             con = DriverManager.getConnection(url, user,
                     pass);
