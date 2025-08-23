@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 
-public class bankManagement { // these class provides all bank method
+public class bankManagement { 
 
     private static final int NULL = 0;
 
@@ -17,26 +17,25 @@ public class bankManagement { // these class provides all bank method
     static String sql = "";
     public static boolean
     createAccount(String name,
-                  int passCode) // create account function
+                  int passCode) 
     {
         try {
-            // validation
+            
             if (name == "" || passCode == NULL) {
                 System.out.println("All Field Required!");
                 return false;
             }
-            // query
+           
             Statement st = con.createStatement();
             sql = "INSERT INTO customer(cname,balance,pass_code) values('"
                     + name + "',1000," + passCode + ")";
 
-            // Execution
+     
             if (st.executeUpdate(sql) == 1) {
                 System.out.println(name
                         + ", Now You Login!");
                 return true;
             }
-            // return
         }
         catch (SQLIntegrityConstraintViolationException e) {
             System.out.println("Username Not Available!");
@@ -50,23 +49,23 @@ public class bankManagement { // these class provides all bank method
     loginAccount(String name, int passCode) // login method
     {
         try {
-            // validation
+            
             if (name == "" || passCode == NULL) {
                 System.out.println("All Field Required!");
                 return false;
             }
-            // query
+        
             sql = "select * from customer where cname='"
                     + name + "' and pass_code=" + passCode;
             PreparedStatement st
                     = con.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
-            // Execution
+            
             BufferedReader sc = new BufferedReader(
                     new InputStreamReader(System.in));
 
             if (rs.next()) {
-                // after login menu driven interface method
+            
 
                 int ch = 5;
                 int amt = 0;
@@ -129,7 +128,7 @@ public class bankManagement { // these class provides all bank method
             else {
                 return false;
             }
-            // return
+            
             return true;
         }
         catch (SQLIntegrityConstraintViolationException e) {
@@ -141,11 +140,11 @@ public class bankManagement { // these class provides all bank method
         return false;
     }
     public static void
-    getBalance(int acNo) // fetch balance method
+    getBalance(int acNo) 
     {
         try {
 
-            // query
+        
             sql = "select * from customer where ac_no="
                     + acNo;
             PreparedStatement st
@@ -158,7 +157,7 @@ public class bankManagement { // these class provides all bank method
                     "Account No", "Name",
                     "Balance");
 
-            // Execution
+            
 
             while (rs.next()) {
                 System.out.printf("%12d %10s %10d.00\n",
@@ -176,9 +175,9 @@ public class bankManagement { // these class provides all bank method
     public static boolean transferMoney(int sender_ac,
                                         int reveiver_ac,
                                         int amount)
-            throws SQLException // transfer money method
+            throws SQLException 
     {
-        // validation
+        
         if (reveiver_ac == NULL || amount == NULL) {
             System.out.println("All Field Required!");
             return false;
@@ -201,7 +200,7 @@ public class bankManagement { // these class provides all bank method
 
             Statement st = con.createStatement();
 
-            // debit
+
             con.setSavepoint();
 
             sql = "update customer set balance=balance-"
@@ -210,7 +209,7 @@ public class bankManagement { // these class provides all bank method
                 System.out.println("Amount Debited!");
             }
 
-            // credit
+    
             sql = "update customer set balance=balance+"
                     + amount + " where ac_no=" + reveiver_ac;
             st.executeUpdate(sql);
@@ -222,7 +221,7 @@ public class bankManagement { // these class provides all bank method
             e.printStackTrace();
             con.rollback();
         }
-        // return
+    
         return false;
     }
 }
